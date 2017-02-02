@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arduino 101 to PubNub</title>
+    <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css" />
+</head>
+<body>
+<div id="acc"></div>
+<div id="gyro"></div>
+
+<script type="text/javascript">
+var pubnub = new PubNub({
+    // your key here
+    subscribeKey : ""
+});
+eon.chart({
+    channels: ["gv-acc"],
+    generate: {
+        bindto: '#acc',
+        data: {
+            type:'spline',
+            colors: {
+                value0:'#ffaaaa',
+                value1:'#cc8888',
+                value2:'#aa4444',
+                value3:'#882222',
+                value4:'#660000',
+                value5:'ffaaaa'
+            },
+            names: {
+                value0: "ax",
+                value1: "ay",
+                value2: "az",
+            }
+        },
+        point: {
+            show: false
+        },
+    },
+    history:true,
+    pubnub: pubnub,
+    limit: 100,
+});
+
+eon.chart({
+    channels: ["gv-gyro"],
+    generate: {
+        bindto: '#gyro',
+        data: {
+            type:'spline',
+            colors: {
+                value0:'#882222',
+                value1:'#660000',
+                value2:'ffaaaa'
+            },
+            names: {
+                value0: "gx",
+                value1: "gy",
+                value2: "gz",
+            }
+        },
+        point: {
+            show: false
+        },
+    },
+    history:true,
+    pubnub: pubnub,
+    limit: 100,
+});
+</script>
+
+</body>
+</html>
